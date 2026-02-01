@@ -1,2 +1,15 @@
+# --- Prefix history search with Up/Down ---
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+# Up/Down arrows search history starting with what you've typed
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
+# Also bind Ctrl-P / Ctrl-N to the same behavior (nice in terminals that glitch arrow codes)
+bindkey '^P' up-line-or-beginning-search
+bindkey '^N' down-line-or-beginning-search
+
 eval "$(starship init zsh)"
 
