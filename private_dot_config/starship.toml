@@ -1,20 +1,37 @@
-add_newline = false
+add_newline = true
 command_timeout = 800
-format = "$directory$git_branch$git_status$character"
+
+format = """
+$directory$git_branch$git_status
+$character
+"""
 
 [directory]
-truncation_length = 3
+style = "bold"
 truncate_to_repo = true
+truncation_length = 3
+format = "[$path]($style)"
 
 [git_branch]
-format = " [$branch]($style)"
+format = "  [$symbol$branch]($style)"
+symbol = "⎇ "
 style = "bold"
 
 [git_status]
 format = " [$all_status$ahead_behind]($style)"
 style = "dimmed"
+conflicted = "≠"
+ahead = "↑"
+behind = "↓"
+diverged = "↕"
+untracked = "?"
+stashed = "*"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "x"
 
 [character]
-success_symbol = "❯"
-error_symbol = "❯"
+success_symbol = "❯ "
+error_symbol = "❯ "
 
