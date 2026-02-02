@@ -1,4 +1,6 @@
-# --- History (sane defaults) ---
+# ================================
+# History (sane defaults)
+# ================================
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=200000
 SAVEHIST=200000
@@ -6,43 +8,127 @@ SAVEHIST=200000
 setopt appendhistory
 setopt inc_append_history         # write history immediately
 setopt share_history              # share across terminals
-setopt hist_ignore_all_dups       # remove older duplicate entries
-setopt hist_save_no_dups
 setopt hist_ignore_space          # commands starting with space not saved
 setopt hist_reduce_blanks
 
-# --- Completion tuning ---
+# Smarter duplicate handling (keeps useful repeats)
+setopt hist_ignore_dups           # ignore immediate duplicates
+setopt hist_expire_dups_first     # when trimming, drop older dups first
+
+# ================================
+# Completion (good UX)
+# ================================
+autoload -Uz compinit
+compinit
+
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:descriptions' format '%F{240}%d%f'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# --- fzf defaults ---
+setopt auto_menu                  # show menu on successive tab press
+setopt complete_in_word           # complete from cursor position
+setopt always_to_end              # move cursor to end after completion
+setopt interactive_comments
+
+# ================================
+# fzf defaults
+# ================================
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 
+# Nice Ctrl-R history UI (fzf)
+if command -v fzf >/dev/null 2>&1; then
+  export FZF_CTRL_R_OPTS="--height 40% --layout=reverse --border"
+fi
+
+# ================================
+# zoxide
+# ================================
 eval "$(zoxide init zsh)"
+
+# Keep your preference: cd behaves like z
 alias cd="z"
 
-# --- Prefix history search with Up/Down ---
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-
-# Up/Down arrows search history starting with what you've typed
-bindkey '^[[A' up-line-or-beginning-search
-bindkey '^[[B' down-line-or-beginning-search
-
-# Also bind Ctrl-P / Ctrl-N to the same behavior (nice in terminals that glitch arrow codes)
-bindkey '^P' up-line-or-beginning-search
-bindkey '^N' down-line-or-beginning-search
-
+# ================================
+# Aliases
+# ================================
 alias ll='ls -alF'
 alias gs='git status'
 alias gd='git diff'
 alias gl='git log --oneline --decorate -n 20'
 
+# Optional: prettier ls if you have eza installed
+# if command -v eza >/dev/null 2>&1; then
+#   alias ls='eza --group-directories-first'
+#   alias ll='eza -lah --group-directories-first --git'
+# fi
+
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# ================================
+# Starship prompt
+# ================================
 eval "$(starship init zsh)"
+
+# ===============================
+# History substring search
+# ===============================
+
+source ~/.zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+zmodload zsh/terminfo
+
+# terminfo keys (robust across terminal modes)
+UP="${terminfo[kcuu1]}"
+DOWN="${terminfo[kcud1]}"
+
+for km in emacs viins vicmd; do
+  # terminfo
+  bindkey -M $km "$UP"   history-substring-search-up
+  bindkey -M $km "$DOWN" history-substring-search-down
+
+  # common raw escape sequences (normal + application cursor mode)
+  bindkey -M $km '^[[A'  history-substring-search-up
+  bindkey -M $km '^[[B'  history-substring-search-down
+  bindkey -M $km '^[OA'  history-substring-search-up
+  bindkey -M $km '^[OB'  history-substring-search-down
+
+  # keep your sexy fallback
+  bindkey -M $km '^P'    history-substring-search-up
+  bindkey -M $km '^N'    history-substring-search-down
+done
+
+# ================================
+# Word movement with Ctrl+Left/Right
+# ================================
+
+for km in emacs viins; do
+  bindkey -M $km '^[[1;5D' backward-word   # Ctrl+Left (common)
+  bindkey -M $km '^[[1;5C' forward-word    # Ctrl+Right (common)
+
+  # other common variants
+  bindkey -M $km '^[[5D' backward-word
+  bindkey -M $km '^[[5C' forward-word
+  bindkey -M $km '^[[1;3D' backward-word   # sometimes Alt+Left
+  bindkey -M $km '^[[1;3C' forward-word
+done
+
+# =================================
+# Ctrl+Backspace / Ctrl+Delete word deletion
+# ================================
+
+for km in emacs viins; do
+  # Ctrl+Backspace (most common variants)
+  bindkey -M $km '^H'          backward-kill-word
+  bindkey -M $km '^?'          backward-kill-word
+  bindkey -M $km '^[^?'        backward-kill-word
+  bindkey -M $km '^[[3;5~'     backward-kill-word
+
+  # Ctrl+Delete (delete word forward)
+  bindkey -M $km '^[[3~'       kill-word
+  bindkey -M $km '^[[3;5~'     kill-word
+done
 
