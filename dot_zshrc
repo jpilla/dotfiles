@@ -120,15 +120,8 @@ done
 # Ctrl+Backspace / Ctrl+Delete word deletion
 # ================================
 
-for km in emacs viins; do
-  # Ctrl+Backspace (most common variants)
-  bindkey -M $km '^H'          backward-kill-word
-  bindkey -M $km '^?'          backward-kill-word
-  bindkey -M $km '^[^?'        backward-kill-word
-  bindkey -M $km '^[[3;5~'     backward-kill-word
-
-  # Ctrl+Delete (delete word forward)
-  bindkey -M $km '^[[3~'       kill-word
-  bindkey -M $km '^[[3;5~'     kill-word
+for km in emacs viins vicmd; do
+  bindkey -M $km '^?' backward-delete-char   # Backspace (DEL) = delete 1 char
+  bindkey -M $km '^H' backward-kill-word     # Ctrl+Backspace (BS) = delete 1 word
 done
 

@@ -2,51 +2,60 @@ add_newline = true
 command_timeout = 800
 
 format = """
-$directory$git_branch$git_status$status
+$directory$git_branch$git_status$status$cmd_duration
 $character
 """
 
+# --- Directory ---
 [directory]
-style = "bold"
+style = "bold cyan"
 truncate_to_repo = true
 truncation_length = 3
 format = "[$path]($style)"
 
+# --- Git branch ---
 [git_branch]
 format = "  [$symbol$branch]($style)"
 symbol = "⎇ "
-style = "bold"
+style = "bold purple"
 
+# --- Git status (this is where the meaning lives) ---
 [git_status]
 format = " [$all_status$ahead_behind]($style)"
-style = "dimmed"
-conflicted = "≠"
-ahead = "↑"
-behind = "↓"
-diverged = "↕"
-untracked = "?"
-stashed = "*"
-modified = "!"
-staged = "+"
-renamed = "»"
-deleted = "x"
+style = "dimmed white"
 
+conflicted = "[≠](bold bright-red)"
+ahead      = "[↑](bold green)"
+behind     = "[↓](bold yellow)"
+diverged   = "[↕](bold yellow)"
+untracked  = "[?](bold bright-red)"
+stashed    = "[*](bold cyan)"
+modified   = "[!](bold yellow)"
+staged     = "[+](bold green)"
+renamed    = "[»](bold blue)"
+deleted    = "[x](bold red)"
+
+# --- Prompt character ---
 [character]
-success_symbol = "❯ "
-error_symbol = "❯ "
+success_symbol = "[❯](bold green) "
+error_symbol   = "[❯](bold red) "
 
-[hostname]
-ssh_only = true
-format = " [$hostname]($style)"
-style = "dimmed"
-
+# --- Exit status (only shows when non-zero, i.e. when it matters) ---
 [status]
 disabled = false
-format = " [$status]($style)"
-style = "bold"
+format = " [↯$status]($style)"
+style = "bold red"
+map_symbol = true
 
+# --- Duration (nice for “why was that slow?”) ---
 [cmd_duration]
 min_time = 1500
 format = " [$duration]($style)"
-style = "dimmed"
+style = "dimmed white"
+
+# --- Hostname (only on SSH) ---
+[hostname]
+ssh_only = true
+format = " [$hostname]($style)"
+style = "dimmed blue"
 
