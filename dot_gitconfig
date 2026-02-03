@@ -1,0 +1,19 @@
+[user]
+    name = Jonathan Pilla
+    email = jon.pilla@gmail.com
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = true
+
+[fetch]
+    prune = true
+
+[push]
+    default = simple
+
+[core]
+    editor = vim
+

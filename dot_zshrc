@@ -125,3 +125,4 @@ for km in emacs viins vicmd; do
   bindkey -M $km '^H' backward-kill-word     # Ctrl+Backspace (BS) = delete 1 word
 done
 
+export PATH="$HOME/.local/bin:$PATH"
