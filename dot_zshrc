@@ -74,31 +74,27 @@ source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 eval "$(starship init zsh)"
 
 # ===============================
-# History substring search
+# History prefix search
 # ===============================
 
-source ~/.zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+zmodload zsh/terminfo 2>/dev/null
 
-zmodload zsh/terminfo
-
-# terminfo keys (robust across terminal modes)
 UP="${terminfo[kcuu1]}"
 DOWN="${terminfo[kcud1]}"
 
 for km in emacs viins vicmd; do
-  # terminfo
-  bindkey -M $km "$UP"   history-substring-search-up
-  bindkey -M $km "$DOWN" history-substring-search-down
+  # Only bind terminfo keys if they exist (prevents empty key sequence error)
+  [[ -n "$UP"   ]] && bindkey -M $km "$UP"   history-beginning-search-backward
+  [[ -n "$DOWN" ]] && bindkey -M $km "$DOWN" history-beginning-search-forward
 
-  # common raw escape sequences (normal + application cursor mode)
-  bindkey -M $km '^[[A'  history-substring-search-up
-  bindkey -M $km '^[[B'  history-substring-search-down
-  bindkey -M $km '^[OA'  history-substring-search-up
-  bindkey -M $km '^[OB'  history-substring-search-down
+  # Always bind common raw escape sequences
+  bindkey -M $km '^[[A' history-beginning-search-backward
+  bindkey -M $km '^[[B' history-beginning-search-forward
+  bindkey -M $km '^[OA' history-beginning-search-backward
+  bindkey -M $km '^[OB' history-beginning-search-forward
 
-  # keep your sexy fallback
-  bindkey -M $km '^P'    history-substring-search-up
-  bindkey -M $km '^N'    history-substring-search-down
+  bindkey -M $km '^P' history-beginning-search-backward
+  bindkey -M $km '^N' history-beginning-search-forward
 done
 
 # ================================
