@@ -60,13 +60,39 @@ alias gs='git status'
 alias gd='git diff'
 alias gl='git log --oneline --decorate -n 20'
 
-# Optional: prettier ls if you have eza installed
-# if command -v eza >/dev/null 2>&1; then
-#   alias ls='eza --group-directories-first'
-#   alias ll='eza -lah --group-directories-first --git'
-# fi
+# ================================
+# Plugins & Enhancements
+# ================================
 
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Helper to source plugins from common OS locations
+function safe_source() {
+  local locations=("$@")
+  for loc in "${locations[@]}"; do
+    if [[ -f "$loc" ]]; then
+      source "$loc"
+      return 0
+    fi
+  done
+  return 1
+}
+
+# Load Autosuggestions
+safe_source \
+  "/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
+  "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
+  "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# Load Syntax Highlighting
+safe_source \
+  "/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" \
+  "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" \
+  "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# Optional: prettier ls if you have eza installed
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --group-directories-first'
+  alias ll='eza -lah --group-directories-first --git'
+fi
 
 # ================================
 # Starship prompt

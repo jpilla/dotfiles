@@ -1,0 +1,43 @@
+" ================================
+" General Settings
+" ================================
+set nocompatible              " Use Vim defaults instead of Vi
+syntax on                     " Enable syntax highlighting
+set number                    " Show line numbers
+set relativenumber            " Show relative line numbers
+set cursorline                " Highlight current line
+set termguicolors             " Enable 24-bit RGB color if terminal supports it
+
+" ================================
+" Tab / Indentation
+" ================================
+set tabstop=2                 " Number of visual spaces per TAB
+set softtabstop=2             " Number of spaces in tab when editing
+set shiftwidth=2              " Number of spaces to use for autoindent
+set expandtab                 " Tabs are spaces
+set autoindent
+set smartindent
+
+" ================================
+" Search
+" ================================
+set incsearch                 " Search as characters are entered
+set hlsearch                  " Highlight search results
+set ignorecase                " Ignore case when searching...
+set smartcase                 " ...unless there's a capital letter
+
+" ================================
+" UI / UX
+" ================================
+set wildmenu                  " Visual autocomplete for command menu
+set showmatch                 " Highlight matching brackets
+set laststatus=2              " Always show status line
+set noshowmode                " Hide the default mode (e.g. -- INSERT --) if using a status line plugin
+
+" Clear search highlight on ESC
+nnoremap <Esc> :noh<CR><Esc>
+
+" ================================
+" File-Specific Syntax
+" ================================
+filetype plugin indent on
