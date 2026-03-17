@@ -1,6 +1,10 @@
 [user]
     name = Jonathan Pilla
+    {{- if eq .chezmoi.os "darwin" }}
+    email = Jonathan.Pilla@checkout.com
+    {{- else }}
     email = jon.pilla@gmail.com
+    {{- end }}
 
 [init]
     defaultBranch = main
@@ -16,4 +20,3 @@
 
 [core]
     editor = vim
-
