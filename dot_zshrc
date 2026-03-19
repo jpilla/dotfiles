@@ -1,4 +1,11 @@
 # ================================
+# Environment detection
+# ================================
+_is_work_mac() {
+  /usr/bin/profiles status -type enrollment 2>/dev/null | grep -q "Enrolled via DEP"
+}
+
+# ================================
 # History (sane defaults)
 # ================================
 HISTFILE="$HOME/.zsh_history"
@@ -148,3 +155,18 @@ for km in emacs viins vicmd; do
 done
 
 export PATH="$HOME/.local/bin:$PATH"
+
+# ================================
+# Corporate certificates (work only)
+# ================================
+if _is_work_mac; then
+  _cert=~/corporate-certs.pem
+  if [[ ! -f $_cert ]]; then
+    security find-certificate -a -p /Library/Keychains/System.keychain > $_cert
+  elif (( $(date +%s) - $(stat -f %m $_cert) > 2592000 )); then
+    # older than 30 days — refresh in background
+    security find-certificate -a -p /Library/Keychains/System.keychain > $_cert &!
+  fi
+  export NODE_EXTRA_CA_CERTS=~/corporate-certs.pem
+  unset _cert
+fi
