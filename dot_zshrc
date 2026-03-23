@@ -171,3 +171,8 @@ if _is_work_mac; then
   export NODE_EXTRA_CA_CERTS=~/corporate-certs.pem
   unset _cert
 fi
+
+# ================================
+# Local overrides (not in version control)
+# ================================
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
