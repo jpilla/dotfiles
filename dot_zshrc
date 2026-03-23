@@ -155,6 +155,7 @@ for km in emacs viins vicmd; do
 done
 
 export PATH="$HOME/.local/bin:$PATH"
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
 
 # ================================
 # Corporate certificates (work only)
