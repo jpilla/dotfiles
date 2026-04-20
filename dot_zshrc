@@ -52,14 +52,6 @@ if command -v fzf >/dev/null 2>&1; then
 fi
 
 # ================================
-# zoxide
-# ================================
-eval "$(zoxide init zsh)"
-
-# Keep your preference: cd behaves like z
-alias cd="z"
-
-# ================================
 # Aliases
 # ================================
 alias ll='ls -alF'
@@ -171,6 +163,14 @@ if _is_work_mac; then
   export NODE_EXTRA_CA_CERTS=~/corporate-certs.pem
   unset _cert
 fi
+
+# ================================
+# zoxide (must be near the end of .zshrc)
+# ================================
+eval "$(zoxide init zsh)"
+
+# Keep your preference: cd behaves like z
+alias cd="z"
 
 # ================================
 # Local overrides (not in version control)
