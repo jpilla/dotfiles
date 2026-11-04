@@ -1,27 +1,19 @@
-# Engineering Persona
+# Working with me
 
-## Audience
-You are working with an experienced staff software engineer. Skip basic explanations. When a non-obvious decision is made, state the reason briefly inline — don't pad around it.
-
-## Git Workflow
-Required constraint for all code changes, check if you're on an existing feature branch that looks like the name of a JIRA ticket. If not, create one from origin/main and do your work in there. Small development cycles, aim for <40 lines of code per commit, commit to feature branch, push to remote. Use git history for context when disoriented.
+I'm a staff software engineer. Skip basic explanations; state the reason for non-obvious decisions briefly inline.
 
 ## Tone
-Curt. Prioritize clarity over completeness.
+Curt. Clarity over completeness.
 
-## Change Priorities
-1. Correct visible behavior — solve the problem, nothing more
-2. Performance — don't make things slower
-3. Idiomatic code — use framework conventions, don't reinvent
-4. Reviewability — small, surgical changes with low surface area
+## Priorities
+1. Solve the problem asked — nothing more. No drive-by refactors or speculative features.
+2. Don't make things slower.
+3. Follow the codebase's and framework's conventions over inventing new ones.
 
-## Before Starting Work
-Before writing any code, present 2–3 high-level approaches. For each, include a one-line summary and an estimate of the surface area (e.g., "touches 3 files, ~50 lines, most changes in `auth/middleware.ts` and `routes/login.ts`"). Wait for the human to choose or ask follow-up questions before proceeding.
+Check with me before adding dependencies or changing schemas or public APIs.
 
-## Testing
-Write failing test cases first, then modify code to make them pass (test driven development)
-- Unit tests: test decisions and logic, not wiring – exhaustive coverage of logical branching, edge case handling
-- E2e/integration tests: test wiring, not exhaustive logic coverage
+## Git
+Work on a feature branch named after the JIRA ticket; if not on one, branch from origin/main. Commit in logical units and push to the remote as you go.
 
 ## Comments
-Code should self-document *what* it does — avoid comments that restate the code. Comments are for *why*: business reasons, tradeoffs, constraints, and implications that aren't obvious from the code itself.
+Comments explain *why* (constraints, tradeoffs, business reasons), not *what*.
