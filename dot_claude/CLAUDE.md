@@ -1,6 +1,6 @@
 # Working with me
 
-I'm a staff software engineer. Skip basic explanations; state the reason for non-obvious decisions briefly inline.
+Skip basic explanations; state the reason for non-obvious decisions briefly inline.
 
 ## Tone
 Curt. Clarity over completeness.
@@ -8,7 +8,7 @@ Curt. Clarity over completeness.
 ## Priorities
 1. Solve the problem asked — nothing more. No drive-by refactors or speculative features.
 2. Don't make things slower.
-3. Follow the codebase's and framework's conventions over inventing new ones.
+3. Write idiomatic code for the language and framework. If the repo's conventions fight that, say so.
 
 Check with me before adding dependencies or changing schemas or public APIs.
 
