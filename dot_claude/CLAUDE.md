@@ -12,6 +12,9 @@ Curt. Clarity over completeness.
 
 Check with me before adding dependencies or changing schemas or public APIs.
 
+## Tests
+Changes ship with tests. Unit tests cover logic and edge cases exhaustively; integration/e2e tests cover wiring, not logic.
+
 ## Git
 Work on a feature branch named after the JIRA ticket; if not on one, branch from origin/main. Commit in logical units and push to the remote as you go.
 
