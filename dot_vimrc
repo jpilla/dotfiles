@@ -32,7 +32,6 @@ set smartcase                 " ...unless there's a capital letter
 set wildmenu                  " Visual autocomplete for command menu
 set showmatch                 " Highlight matching brackets
 set laststatus=2              " Always show status line
-set noshowmode                " Hide the default mode (e.g. -- INSERT --) if using a status line plugin
 
 " Clear search highlight on ESC
 nnoremap <Esc> :noh<CR><Esc>
